@@ -1,0 +1,175 @@
+name: melos_rack
+
+repository:
+  type: "gitlab"
+  origin: "https://gitlab.ew1-aws.finetwork.es"
+  owner: "fiapp"
+  name: "melos-rack"
+
+packages:
+  - module_structure
+
+command:
+  version:
+    # Only allow versioning to happen on main branch.
+    branch: main
+    # Generate commit links in package changelogs.
+    # linkToCommits: true
+    updateGitTagRefs: true
+    # Additionally build a changelog at the root of the workspace.
+    workspaceChangelog: true
+
+    changelogs:
+      - path: melos_rack_changelog.md
+        packageFilters:
+          scope: melos_rack_*
+        description: |
+          All notable changes for melos_rack packages
+  bootstrap:
+    # It seems so that running "pub get" in parallel has some issues (like
+    # https://github.com/dart-lang/pub/issues/3404). Disabling this feature
+    # makes the CI much more stable.
+    runPubGetInParallel: false
+    usePubspecOverrides: true
+
+scripts:
+  version:
+    exec: melos version -c
+    description: generate changelog.
+
+  analyze:
+    run: |
+      melos exec -c 5 -- \
+        dart analyze . --fatal-infos
+    description: |
+      Run `dart analyze` in all packages.
+       - Note: you can also rely on your IDEs Dart Analysis / Issues window.
+
+  env:
+    run: melos exec -- cat .current
+    description: Show the current environment.
+    packageFilters:
+      fileExists:
+        - .current
+  env:pro:
+    run: \$MELOS_ROOT_PATH/scripts/pro_envoriment.sh
+    description: Change to pro environment
+    exec:
+      concurrency: 1
+    packageFilters:
+      fileExists:
+        - env.properties
+
+  env:dev:
+    run: \$MELOS_ROOT_PATH/scripts/dev_envoriment.sh
+    description: Change to pro environment
+    exec:
+      concurrency: 6
+      orderDependents: true
+    packageFilters:
+      fileExists:
+        - env.properties
+        - dev.properties
+    # orderDependents: true
+
+  env:kube:
+    run: \$MELOS_ROOT_PATH/scripts/kube_envoriment.sh
+    description: Change to pro environment
+    exec:
+      concurrency: 1
+      orderDependents: true
+    packageFilters:
+      fileExists:
+        - env.properties
+        - kube.properties
+
+  release:
+    description: Build app.
+    run: \$MELOS_ROOT_PATH/scripts/release.sh
+    exec:
+      concurrency: 1
+    packageFilters:
+      fileExists:
+        - release.properties
+
+  build:android:
+    run: \$MELOS_ROOT_PATH/scripts/build_android.sh
+    exec:
+      concurrency: 1
+    packageFilters:
+      dirExists:
+        - android
+
+  build:ios:
+    run: \$MELOS_ROOT_PATH/scripts/build_ios.sh
+    exec:
+      concurrency: 1
+    packageFilters:
+      dirExists:
+        - ios
+
+  test:
+    run: |
+      melos exec -c 6 --fail-fast -- \
+        "flutter test"
+    description: Run `flutter test` for a specific package.
+    packageFilters:
+      dirExists:
+        - test
+      ignore:
+        - "*example*"
+
+  test:mobile_e2e:
+    run: |
+      melos exec -c 1 --fail-fast -- \
+        "flutter drive --target=./test_driver/MELOS_PARENT_PACKAGE_NAME_e2e.dart"
+    description: |
+      Run all Android or iOS test driver e2e tests in a specific example app.
+      - Requires an Android emulator or iOS simulator.
+    select-package:
+      dir-exists:
+        - test_driver
+      scope: "*example*"
+
+  coverage: melos exec -- "\$MELOS_ROOT_PATH/scripts/coverage.sh"
+  combine_coverage: melos exec -- "\$MELOS_ROOT_PATH/scripts/combine_coverage.sh"
+
+  clean:deep:
+    run: git clean -x -d -f -q
+    description: Clean things very deeply, can be used to establish "pristine checkout" status.
+
+  postclean: >
+    melos exec -c 6 -- "flutter clean"
+
+  update-goldens:
+    run: melos exec -- flutter test --update-goldens
+    packageFilters:
+      dirExists: test
+    description: Re-generate all golden test files
+
+  pub_upgrade:
+    run: melos exec -c 1 -- "flutter pub upgrade"
+  generate:
+    run: \$MELOS_ROOT_PATH/scripts/generate.sh
+    description: Change generate build runner
+    exec:
+      concurrency: 1
+      orderDependents: true
+    packageFilters:
+      dependsOn:
+        - build_runner
+        # - isar_generator
+        # - injectable_generator
+      noDependsOn:
+        - envied_generator
+
+  create:native_resources:
+    run: \$MELOS_ROOT_PATH/scripts/native_resources.sh
+    exec:
+      concurrency: 6
+    description: Generate native resoruces.
+    packageFilters:
+      fileExists:
+        - assets/native_splash/config.yaml
+        - assets/launcher_icon/config.yaml
+        - assets/launcher_icon/config.yaml

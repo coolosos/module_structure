@@ -1,0 +1,8 @@
+name: melos_rack_module_structure
+publish_to: none
+
+environment:
+  sdk: ">=3.0.1 <4.0.0"
+dev_dependencies:
+  melos: ^3.1.0
+  coolint: 1.0.0
