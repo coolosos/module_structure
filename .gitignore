@@ -44,6 +44,7 @@ app.*.symbols
 app.*.map.json
 /.json_models/
 pubspec.lock
+*.iml
 
 # Web related
 lib/generated_plugin_registrant.dart
