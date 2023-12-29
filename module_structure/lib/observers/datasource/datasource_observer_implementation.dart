@@ -1,4 +1,4 @@
-part of datasource_observers;
+part of 'datasource_observer_instances.dart';
 
 final class SimpleDatasourceObserverImpl implements SimpleDatasourceObserver {
   @override

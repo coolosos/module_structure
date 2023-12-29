@@ -1,4 +1,4 @@
-part of repository_observers;
+part of 'repository_observer_instances.dart';
 
 class _DefaultRepositoryImp implements RepositoryDatasourceCallableObserver {
   @override
@@ -18,6 +18,6 @@ class _DefaultRepositoryImp implements RepositoryDatasourceCallableObserver {
 
   @override
   void beforeCall(String name, String datasourceName) {
-    // TODO: implement beforeCall
+    log('💨 Repository $name are going to call $datasourceName');
   }
 }

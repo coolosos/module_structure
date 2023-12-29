@@ -1,4 +1,4 @@
-part of repository_observers;
+part of 'repository_observer_instances.dart';
 
 abstract interface class SimpleRepositoryObserver implements SimpleObserver {
   @override

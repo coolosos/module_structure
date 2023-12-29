@@ -6,11 +6,9 @@ import 'package:fpdart/fpdart.dart';
 export 'package:fpdart/fpdart.dart' hide Order;
 
 export 'package:meta/meta.dart';
+import '../model/entity.dart';
 import '../model/failure.dart';
 import '../model/params.dart';
-import 'entity.dart';
-import 'params.dart';
-export 'params.dart';
 
 export '../model/failure.dart';
 

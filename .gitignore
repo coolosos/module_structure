@@ -43,6 +43,7 @@ build/
 app.*.symbols
 app.*.map.json
 /.json_models/
+pubspec.lock
 
 # Web related
 lib/generated_plugin_registrant.dart
