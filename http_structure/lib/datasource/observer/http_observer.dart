@@ -1,13 +1,16 @@
+// ignore_for_file: unnecessary_getters_setters
+
 import 'http_datasource_observer.dart';
 
 class HttpObserverInstances {
-  static HttpDatasourceObserver? _httpDatasourceObserver;
+  static HttpDatasourceObserver _httpDatasourceObserver =
+      _DefaultHttpObserver();
 
   static set httpDatasourceObserver(HttpDatasourceObserver observer) =>
       _httpDatasourceObserver = observer;
 
   static HttpDatasourceObserver get httpDatasourceObserver =>
-      _httpDatasourceObserver ?? _DefaultHttpObserver();
+      _httpDatasourceObserver;
 }
 
 class _DefaultHttpObserver implements HttpDatasourceObserver {
