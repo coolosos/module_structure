@@ -1,4 +1,4 @@
-name: module_structure
+name: http_structure
 description: Conventions of Datasource, Repository and Usecase
 version: 0.0.1
 publish_to: "none"
@@ -10,10 +10,13 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  fpdart: ^0.6.0
-  rxdart: ^0.27.7
-  equatable: ^2.0.5
-  nested: ^1.0.0
+  http: ^1.2.1
+  universal_io: ^2.2.2
+  module_structure:
+    git:
+      url: git@github.com:coolosos/module_structure.git
+      path: module_structure
+      ref: main
 
 dev_dependencies:
   flutter_test:

@@ -8,6 +8,7 @@ repository:
 
 packages:
   - module_structure
+  - http_structure
 
 command:
   version:
