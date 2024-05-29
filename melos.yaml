@@ -9,6 +9,7 @@ repository:
 packages:
   - module_structure
   - http_structure
+  - view_structure
 
 command:
   version:

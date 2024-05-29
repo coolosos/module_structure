@@ -3,7 +3,7 @@ import 'package:nested/nested.dart';
 
 import 'view_module.dart';
 
-final class ModuleProvider<T extends ViewModule>
+base class ModuleProvider<T extends ViewModule>
     extends SingleChildStatelessWidget {
   const ModuleProvider(
     this.component, {
@@ -16,7 +16,7 @@ final class ModuleProvider<T extends ViewModule>
   Widget buildWithChild(BuildContext context, Widget? child) {
     assert(
       child != null,
-      '$runtimeType used outside of ModuleProvider must specify a child',
+      '$runtimeType used outside of MultiComponentProvider must specify a child',
     );
     return _ComponentInherited<T>(
       component: component,
