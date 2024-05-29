@@ -40,18 +40,27 @@ abstract base class ComponentStructure<CLogic extends ComponentLogic>
 
   @override
   Widget build(BuildContext context) {
-    return Nested(
-      child: ComponentLogicProvider<CLogic>(
-        componentLogic: componentLogic,
-        child: componentContent,
-      ),
-      children: [
-        if (componentLogic.scrollNotificationEvent
-            is NotificationUpdateListenerCallback)
-          NotificationScrollListener(
-            notificationEvent: componentLogic.scrollNotificationEvent!,
-          ),
-      ],
+    final scrollNotificationChild = componentLogic.scrollNotificationEvent;
+
+    if (scrollNotificationChild is NotificationUpdateListenerCallback) {
+      return Nested(
+        child: ComponentLogicProvider<CLogic>(
+          componentLogic: componentLogic,
+          child: componentContent,
+        ),
+        children: [
+          if (componentLogic.scrollNotificationEvent
+              is NotificationUpdateListenerCallback)
+            NotificationScrollListener(
+              notificationEvent: componentLogic.scrollNotificationEvent!,
+            ),
+        ],
+      );
+    }
+
+    return ComponentLogicProvider<CLogic>(
+      componentLogic: componentLogic,
+      child: componentContent,
     );
   }
 }
