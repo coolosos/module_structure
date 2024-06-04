@@ -1,0 +1,22 @@
+name: view_structure
+description: Conventions of Modules and Components for view. It establishes the basics of how to make a view module and how its dependencies are injected. The idea is to come up with a base that is flexible enough to work from it by letting each view package be unique but start from the same class so that it can be easily instantiated.
+version: 0.0.1
+publish_to: "none"
+
+environment:
+  sdk: ">=3.1.2 <4.0.0"
+  flutter: ">=3.7.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  equatable: ^2.0.5
+  nested: ^1.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  coolint: 2.0.0
+
+flutter:
+  generate: true
