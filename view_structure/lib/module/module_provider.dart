@@ -6,20 +6,20 @@ import 'view_module.dart';
 base class ModuleProvider<T extends ViewModule>
     extends SingleChildStatelessWidget {
   const ModuleProvider(
-    this.component, {
+    this.module, {
     super.key,
     super.child,
   });
-  final T component;
+  final T module;
 
   @override
   Widget buildWithChild(BuildContext context, Widget? child) {
     assert(
       child != null,
-      '$runtimeType used outside of MultiComponentProvider must specify a child',
+      '$runtimeType used outside of MultiModuleProvider must specify a child',
     );
-    return _ComponentInherited<T>(
-      component: component,
+    return _ModuleInherited<T>(
+      module: module,
       child: child!,
     );
   }
@@ -29,31 +29,31 @@ base class ModuleProvider<T extends ViewModule>
     bool build = false,
   }) {
     final conf = build
-        ? context.dependOnInheritedWidgetOfExactType<_ComponentInherited<T>>()
-        : context.findAncestorWidgetOfExactType<_ComponentInherited<T>>();
+        ? context.dependOnInheritedWidgetOfExactType<_ModuleInherited<T>>()
+        : context.findAncestorWidgetOfExactType<_ModuleInherited<T>>();
 
     if (conf == null) {
       throw FlutterError(
         '''
-        Component.of() called with a context that does not contains a $T.
+        ModuleProvider.of() called with a context that does not contains a $T.
         
         The widget used was: ${context.widget.runtimeType}.
         ''',
       );
     }
 
-    return conf.component;
+    return conf.module;
   }
 }
 
-final class _ComponentInherited<T extends ViewModule> extends InheritedWidget {
-  const _ComponentInherited({
+final class _ModuleInherited<T extends ViewModule> extends InheritedWidget {
+  const _ModuleInherited({
     required super.child,
-    required this.component,
+    required this.module,
     super.key,
   });
 
-  final T component;
+  final T module;
 
   @override
   bool updateShouldNotify(covariant InheritedWidget oldWidget) {
