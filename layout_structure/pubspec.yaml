@@ -10,7 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  fpdart: ^0.6.0
+  fpdart: ^1.1.0
   nested: ^1.0.0
 
 dev_dependencies:
