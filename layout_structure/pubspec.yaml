@@ -10,13 +10,13 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  fpdart: ^0.6.0
+  fpdart: ^1.1.0
   nested: ^1.0.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  coolint: 1.0.2
+  coolint: 2.0.0
 
 flutter:
   generate: true
