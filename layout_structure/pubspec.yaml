@@ -1,0 +1,22 @@
+name: layout_structure
+description: layouts wrapper
+version: 0.0.1
+publish_to: "none"
+
+environment:
+  sdk: ">=3.0.1 <4.0.0"
+  flutter: ">=3.19.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  fpdart: ^0.6.0
+  nested: ^1.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  coolint: 1.0.2
+
+flutter:
+  generate: true
