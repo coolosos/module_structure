@@ -1,11 +1,11 @@
 import 'package:flutter/widgets.dart';
-import '../layout/layout.dart';
 import 'package:nested/nested.dart';
 
-import '../layout/layout_scope.dart';
+import 'layout.dart';
+import 'layout_scope.dart';
 
-abstract base class ComponentLayout extends SingleChildStatelessWidget {
-  const ComponentLayout({
+abstract base class LayoutProviderBase extends SingleChildStatelessWidget {
+  const LayoutProviderBase({
     super.key,
     super.child,
   });
@@ -18,7 +18,7 @@ abstract base class ComponentLayout extends SingleChildStatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         return LayoutScope(
-          layoutList: layouts,
+          layouts: layouts,
           constraints: constraints,
           child: Nested(
             children: layouts,
@@ -28,4 +28,15 @@ abstract base class ComponentLayout extends SingleChildStatelessWidget {
       },
     );
   }
+}
+
+final class LayoutProvider extends LayoutProviderBase {
+  const LayoutProvider({
+    required this.layoutList,
+    super.key,
+    super.child,
+  });
+
+  @override
+  final List<Layout> layoutList;
 }

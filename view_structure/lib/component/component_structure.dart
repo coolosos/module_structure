@@ -49,11 +49,9 @@ abstract base class ComponentStructure<CLogic extends ComponentLogic>
           child: componentContent,
         ),
         children: [
-          if (componentLogic.scrollNotificationEvent
-              is NotificationUpdateListenerCallback)
-            NotificationScrollListener(
-              notificationEvent: componentLogic.scrollNotificationEvent!,
-            ),
+          NotificationScrollListener(
+            notificationEvent: scrollNotificationChild,
+          ),
         ],
       );
     }
