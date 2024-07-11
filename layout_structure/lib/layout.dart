@@ -27,6 +27,7 @@ abstract class Layout extends SingleChildStatelessWidget {
 
   @override
   Widget buildWithChild(BuildContext context, Widget? child) {
+    if (!apply) return child ?? const SizedBox.shrink();
     final Widget? content =
         child != null ? KeyedSubtree(key: GlobalKey(), child: child) : child;
 
