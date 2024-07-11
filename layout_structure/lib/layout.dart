@@ -4,7 +4,7 @@ import 'breakpoint.dart';
 import 'layout_scope.dart';
 import 'package:nested/nested.dart';
 
-abstract class Layout extends SingleChildStatelessWidget {
+abstract base class Layout extends SingleChildStatelessWidget {
   const Layout({
     super.child,
     super.key,
