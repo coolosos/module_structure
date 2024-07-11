@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 
 import '../layout.dart';
 
-abstract class BottomContentLayout extends Layout {
+abstract base class BottomContentLayout extends Layout {
   const BottomContentLayout({
     required this.contentSize,
     super.key,

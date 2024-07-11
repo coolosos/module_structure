@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 
 import '../layout.dart';
 
-abstract class LeftContentLayout extends Layout {
+abstract base class LeftContentLayout extends Layout {
   const LeftContentLayout({
     required this.contentSize,
     super.child,

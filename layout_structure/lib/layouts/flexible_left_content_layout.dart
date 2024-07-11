@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../layout.dart';
 
-abstract class FlexibleContentLayout extends Layout {
+abstract base class FlexibleContentLayout extends Layout {
   const FlexibleContentLayout({
     super.child,
     super.key,

@@ -4,7 +4,7 @@ import 'breakpoint.dart';
 import 'layout_scope.dart';
 import 'package:nested/nested.dart';
 
-abstract class Layout extends SingleChildStatelessWidget {
+abstract base class Layout extends SingleChildStatelessWidget {
   const Layout({
     super.child,
     super.key,
@@ -27,6 +27,7 @@ abstract class Layout extends SingleChildStatelessWidget {
 
   @override
   Widget buildWithChild(BuildContext context, Widget? child) {
+    if (!apply) return child ?? const SizedBox.shrink();
     final Widget? content =
         child != null ? KeyedSubtree(key: GlobalKey(), child: child) : child;
 

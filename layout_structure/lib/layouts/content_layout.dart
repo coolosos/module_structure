@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 
 import '../layout.dart';
 
-abstract class ContentLayout extends Layout {
+abstract base class ContentLayout extends Layout {
   const ContentLayout({
     required this.constraints,
     super.child,
