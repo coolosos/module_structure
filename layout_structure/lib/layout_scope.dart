@@ -33,9 +33,9 @@ class LayoutScope extends InheritedWidget {
       Breakpoint.breakpointOf(of(context).constraints.maxWidth);
 
   bool isSideApplied<T extends Layout>() =>
-      _getLayoutFromList()?.apply ?? false;
+      _getLayoutFromList<T>()?.apply ?? false;
 
-  bool isSideDefined<T extends Layout>() => _getLayoutFromList() != null;
+  bool isSideDefined<T extends Layout>() => _getLayoutFromList<T>() != null;
 
   @override
   bool updateShouldNotify(LayoutScope oldWidget) => true;
