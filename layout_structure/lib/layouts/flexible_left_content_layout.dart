@@ -14,34 +14,31 @@ abstract base class FlexibleContentLayout extends Layout {
   bool get apply => true;
 
   @override
-  Widget? small(
-    BuildContext context,
-    Widget? child,
-  ) {
-    return null;
-  }
+  LayoutChildBuilder? get small => null;
 
   @override
-  Widget medium(
-    BuildContext context,
-    Widget? child,
-  ) {
-    return child ?? const SizedBox();
-  }
+  LayoutChildBuilder get medium => (
+        BuildContext context,
+        Widget? child,
+        LayoutScope layoutScope,
+      ) {
+        return child ?? const SizedBox.shrink();
+      };
 
   @override
-  Widget? large(
-    BuildContext context,
-    Widget? child,
-  ) {
-    return Row(
-      children: [
-        SizedBox(
-          width: 420,
-          child: content.call(context),
-        ),
-        if (child != null) Expanded(child: child),
-      ],
-    );
-  }
+  LayoutChildBuilder get large => (
+        BuildContext context,
+        Widget? child,
+        LayoutScope layoutScope,
+      ) {
+        return Row(
+          children: [
+            SizedBox(
+              width: 420,
+              child: content.call(context),
+            ),
+            if (child != null) Expanded(child: child),
+          ],
+        );
+      };
 }

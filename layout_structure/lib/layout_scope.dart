@@ -5,12 +5,18 @@ import 'layout.dart';
 import 'package:collection/collection.dart';
 
 class LayoutScope extends InheritedWidget {
-  const LayoutScope({
-    required super.child,
+  LayoutScope({
+    required Widget child,
     required this.constraints,
     required this.layouts,
     super.key,
-  });
+  }) : super(
+          child: child = Nested(
+            children: layouts,
+            child: child,
+          ),
+        );
+
   final List<Layout> layouts;
   final BoxConstraints constraints;
 
@@ -29,8 +35,7 @@ class LayoutScope extends InheritedWidget {
     return layoutScope;
   }
 
-  static Breakpoint breakpointOf(BuildContext context) =>
-      Breakpoint.breakpointOf(of(context).constraints.maxWidth);
+  Breakpoint get breakpoint => Breakpoint.breakpointOf(constraints.maxWidth);
 
   bool isSideApplied<T extends Layout>() =>
       _getLayoutFromList<T>()?.apply ?? false;
@@ -43,22 +48,4 @@ class LayoutScope extends InheritedWidget {
   Layout? _getLayoutFromList<T extends Layout>() => layouts.firstWhereOrNull(
         (layout) => layout.runtimeType == T,
       );
-
-  static Widget provide({
-    required Widget? child,
-    required List<Layout> layoutList,
-  }) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return LayoutScope(
-          layouts: layoutList,
-          constraints: constraints,
-          child: Nested(
-            children: layoutList,
-            child: child,
-          ),
-        );
-      },
-    );
-  }
 }

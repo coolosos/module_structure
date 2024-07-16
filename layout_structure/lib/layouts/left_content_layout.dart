@@ -16,34 +16,31 @@ abstract base class LeftContentLayout extends Layout {
   bool get apply => true;
 
   @override
-  Widget? small(
-    BuildContext context,
-    Widget? child,
-  ) {
-    return null;
-  }
+  LayoutChildBuilder? get small => null;
 
   @override
-  Widget medium(
-    BuildContext context,
-    Widget? child,
-  ) {
-    return child ?? const SizedBox();
-  }
+  LayoutChildBuilder get medium => (
+        BuildContext context,
+        Widget? child,
+        LayoutScope layoutScope,
+      ) {
+        return child ?? const SizedBox();
+      };
 
   @override
-  Widget? large(
-    BuildContext context,
-    Widget? child,
-  ) {
-    return Row(
-      children: [
-        content.call(context),
-        SizedBox(
-          width: contentSize.width,
-          child: child,
-        ),
-      ],
-    );
-  }
+  LayoutChildBuilder get large => (
+        BuildContext context,
+        Widget? child,
+        LayoutScope layoutScope,
+      ) {
+        return Row(
+          children: [
+            content.call(context),
+            SizedBox(
+              width: contentSize.width,
+              child: child,
+            ),
+          ],
+        );
+      };
 }
