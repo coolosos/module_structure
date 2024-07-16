@@ -17,36 +17,27 @@ abstract base class BottomContentLayout extends Layout {
   bool get apply => kIsWeb;
 
   @override
-  Widget medium(
-    BuildContext context,
-    Widget? child,
-  ) {
-    return apply
-        ? SingleChildScrollView(
-            primary: true,
-            child: Column(
-              children: [
-                SizedBox(height: contentSize.height, child: child),
-                content.call(context),
-              ],
-            ),
-          )
-        : child ?? const SizedBox();
-  }
+  LayoutChildBuilder? get small => null;
 
   @override
-  Widget? large(
-    BuildContext context,
-    Widget? child,
-  ) {
-    return null;
-  }
+  LayoutChildBuilder get medium => (
+        BuildContext context,
+        Widget? child,
+        LayoutScope layoutScope,
+      ) {
+        return apply
+            ? SingleChildScrollView(
+                primary: true,
+                child: Column(
+                  children: [
+                    SizedBox(height: contentSize.height, child: child),
+                    content.call(context),
+                  ],
+                ),
+              )
+            : child ?? const SizedBox();
+      };
 
   @override
-  Widget? small(
-    BuildContext context,
-    Widget? child,
-  ) {
-    return null;
-  }
+  LayoutChildBuilder? get large => null;
 }

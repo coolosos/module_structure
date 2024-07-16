@@ -4,24 +4,23 @@ import 'breakpoint.dart';
 import 'layout_scope.dart';
 import 'package:nested/nested.dart';
 
+export 'layout_scope.dart';
+
+typedef LayoutChildBuilder = Widget Function(
+  BuildContext context,
+  Widget? child,
+  LayoutScope layoutScope,
+);
+
 abstract base class Layout extends SingleChildStatelessWidget {
   const Layout({
     super.child,
     super.key,
   });
 
-  Widget? small(
-    BuildContext context,
-    Widget? child,
-  );
-  Widget medium(
-    BuildContext context,
-    Widget? child,
-  );
-  Widget? large(
-    BuildContext context,
-    Widget? child,
-  );
+  LayoutChildBuilder? get small;
+  LayoutChildBuilder get medium;
+  LayoutChildBuilder? get large;
 
   bool get apply;
 
@@ -31,12 +30,17 @@ abstract base class Layout extends SingleChildStatelessWidget {
     final Widget? content =
         child != null ? KeyedSubtree(key: GlobalKey(), child: child) : child;
 
-    Breakpoint? layoutSize = LayoutScope.breakpointOf(context);
+    final layoutScope = LayoutScope.of(context);
+    Breakpoint? layoutSize = layoutScope.breakpoint;
 
     return layoutSize.resolve(
-      onL: IO(() => large(context, content) ?? medium(context, content)),
-      onM: IO(() => medium(context, content)),
-      onS: IO(() => small(context, content) ?? medium(context, content)),
+      onL: IO(
+        () => (large ?? medium).call(context, content, layoutScope),
+      ),
+      onM: IO(() => medium(context, content, layoutScope)),
+      onS: IO(
+        () => (small ?? medium).call(context, content, layoutScope),
+      ),
     );
   }
 }
