@@ -24,7 +24,7 @@ abstract base class LeftContentLayout extends Layout {
         Widget? child,
         LayoutScope layoutScope,
       ) {
-        return child ?? const SizedBox();
+        return child ?? const SizedBox.shrink();
       };
 
   @override
