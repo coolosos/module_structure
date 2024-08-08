@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:fpdart/fpdart.dart';
+export 'package:fpdart/fpdart.dart' show IO;
 
 enum Breakpoint {
   s(width: 320),

@@ -27,20 +27,14 @@ abstract base class Layout extends SingleChildStatelessWidget {
   @override
   Widget buildWithChild(BuildContext context, Widget? child) {
     if (!apply) return child ?? const SizedBox.shrink();
-    final Widget? content =
-        child != null ? KeyedSubtree(key: GlobalKey(), child: child) : child;
 
     final layoutScope = LayoutScope.of(context);
     Breakpoint? layoutSize = layoutScope.breakpoint;
 
     return layoutSize.resolve(
-      onL: IO(
-        () => (large ?? medium).call(context, content, layoutScope),
-      ),
-      onM: IO(() => medium(context, content, layoutScope)),
-      onS: IO(
-        () => (small ?? medium).call(context, content, layoutScope),
-      ),
+      onL: IO.of((large ?? medium)(context, child, layoutScope)),
+      onM: IO.of(medium(context, child, layoutScope)),
+      onS: IO.of((small ?? medium)(context, child, layoutScope)),
     );
   }
 }
