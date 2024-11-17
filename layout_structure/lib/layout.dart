@@ -1,5 +1,4 @@
 import 'package:flutter/widgets.dart';
-import 'package:fpdart/fpdart.dart';
 import 'breakpoint.dart';
 import 'layout_scope.dart';
 import 'package:nested/nested.dart';

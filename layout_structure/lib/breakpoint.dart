@@ -1,24 +1,68 @@
-import 'package:collection/collection.dart';
 import 'package:fpdart/fpdart.dart';
 export 'package:fpdart/fpdart.dart' show IO;
 
-enum Breakpoint {
-  s(width: 320),
-  m(width: 600),
-  l(width: 1024),
+enum BreakpointNames {
+  xs,
+  sm,
+  md,
+  lg,
+  xl,
   ;
 
+  bool operator <(BreakpointNames breakpoint) => index < breakpoint.index;
+  bool operator >(BreakpointNames breakpoint) => index > breakpoint.index;
+  bool operator <=(BreakpointNames breakpoint) => index <= breakpoint.index;
+  bool operator >=(BreakpointNames breakpoint) => index >= breakpoint.index;
+}
+
+enum BreakpointBasicNames {
+  s,
+  m,
+  l,
+  ;
+
+  bool operator <(BreakpointBasicNames breakpoint) => index < breakpoint.index;
+  bool operator >(BreakpointBasicNames breakpoint) => index > breakpoint.index;
+  bool operator <=(BreakpointBasicNames breakpoint) =>
+      index <= breakpoint.index;
+  bool operator >=(BreakpointBasicNames breakpoint) =>
+      index >= breakpoint.index;
+}
+
+class Range {
+  const Range({required this.minWidth, required this.maxWidth});
+
+  final double minWidth;
+  final double maxWidth;
+
+  bool contains(double width) => minWidth >= width || width <= maxWidth;
+}
+
+const _breakpoints = {
+  BreakpointNames.xs: Range(minWidth: 0, maxWidth: 599),
+  BreakpointNames.sm: Range(minWidth: 600, maxWidth: 899),
+  BreakpointNames.md: Range(minWidth: 900, maxWidth: 1199),
+  BreakpointNames.lg: Range(minWidth: 1200, maxWidth: 1535),
+  BreakpointNames.xl: Range(minWidth: 1536, maxWidth: double.infinity),
+};
+const _basicBreakpoints = {
+  BreakpointBasicNames.s: Range(minWidth: 0, maxWidth: 599),
+  BreakpointBasicNames.m: Range(minWidth: 600, maxWidth: 1023),
+  BreakpointBasicNames.l: Range(minWidth: 1024, maxWidth: double.infinity),
+};
+
+const _defaultBreakpoints = {
+  ..._breakpoints,
+  ..._basicBreakpoints,
+};
+
+class Breakpoint {
   const Breakpoint({
     required this.width,
+    this.breakpoints = _defaultBreakpoints,
   });
 
-  factory Breakpoint.breakpointOf(double maxWidth) {
-    return Breakpoint.sortedValues.firstWhere(
-      (breakpoint) => maxWidth >= breakpoint.width,
-      orElse: () => Breakpoint.s,
-    );
-  }
-
+  final Map<Object, Range> breakpoints;
   final double width;
 
   T resolve<T>({
@@ -26,42 +70,22 @@ enum Breakpoint {
     required IO<T> onM,
     required IO<T> onS,
   }) {
-    final io = switch (this) {
-      Breakpoint.l => onL,
-      Breakpoint.m => onM,
-      Breakpoint.s => onS,
-    };
-    return io.run();
+    if (isS) {
+      return onS.run();
+    }
+    if (isM) {
+      return onM.run();
+    }
+
+    return onL.run();
   }
 
-  static List<Breakpoint> get sortedValues {
-    return Breakpoint.values.sorted((a, b) => b.width.compareTo(a.width));
-  }
+  bool isInRange(Range? point) => point?.contains(width) ?? false;
+  bool isByName(Object? point) => breakpoints[point]?.contains(width) ?? false;
 
-  Breakpoint? get smaller {
-    return {
-      Breakpoint.s: null,
-      Breakpoint.m: Breakpoint.s,
-      Breakpoint.l: Breakpoint.m,
-    }[this];
-  }
+  bool get isS => isByName(BreakpointBasicNames.s);
 
-  Breakpoint? get bigger {
-    return {
-      Breakpoint.s: Breakpoint.m,
-      Breakpoint.m: Breakpoint.l,
-      Breakpoint.l: null,
-    }[this];
-  }
+  bool get isM => isByName(BreakpointBasicNames.m);
 
-  bool get isS => Breakpoint.s == this;
-
-  bool get isM => Breakpoint.m == this;
-
-  bool get isL => Breakpoint.l == this;
-
-  bool operator <(Breakpoint breakpoint) => index < breakpoint.index;
-  bool operator >(Breakpoint breakpoint) => index > breakpoint.index;
-  bool operator <=(Breakpoint breakpoint) => index <= breakpoint.index;
-  bool operator >=(Breakpoint breakpoint) => index >= breakpoint.index;
+  bool get isL => isByName(BreakpointBasicNames.l);
 }
