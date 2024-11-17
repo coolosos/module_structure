@@ -35,7 +35,7 @@ class LayoutScope extends InheritedWidget {
     return layoutScope;
   }
 
-  Breakpoint get breakpoint => Breakpoint.breakpointOf(constraints.maxWidth);
+  Breakpoint get breakpoint => Breakpoint(width: constraints.maxWidth);
 
   bool isSideApplied<T extends Layout>() =>
       _getLayoutFromList<T>()?.apply ?? false;
