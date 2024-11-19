@@ -35,7 +35,7 @@ class Range {
   final double minWidth;
   final double maxWidth;
 
-  bool contains(double width) => minWidth >= width || width <= maxWidth;
+  bool contains(double width) => width >= minWidth && width <= maxWidth;
 }
 
 const _breakpoints = {
