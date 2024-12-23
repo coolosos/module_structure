@@ -1,13 +1,13 @@
-import 'package:module_structure/model/codeable.dart';
+import 'package:module_structure/model/codable.dart';
 import 'package:module_structure/model/params.dart';
 
+import '../http_datasource.dart';
 import 'params/post_param.dart';
-import 'request.dart';
 
-mixin PostRequest<Info extends Codeable> on Request<PostParam, Info> {
+mixin PostRequest<Info extends Codable> on HttpDataSource<Info> {
   @override
   Future<Info> call({required Params params}) async {
-    final PostParam postParams = generateCallRequeriment(params: params);
+    final PostParam postParams = generateCallRequirement(params: params);
 
     final callUri = postParams.modifyUriWithUrlParams(uri);
 
@@ -32,4 +32,7 @@ mixin PostRequest<Info extends Codeable> on Request<PostParam, Info> {
       requestBody: body,
     );
   }
+
+  @override
+  PostParam generateCallRequirement({required covariant Params params});
 }

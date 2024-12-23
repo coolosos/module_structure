@@ -8,10 +8,10 @@ import '../../observers/repository/repository_observer_instances.dart';
 import '../datasources/callable_datasource.dart';
 import 'repository_datasource.dart';
 
-abstract class RepositoryDataSourceCalleable<ValueType,
-        DS extends DataSourceCalleable<ValueType>>
+abstract class RepositoryDataSourceCallable<ValueType,
+        DS extends DataSourceCallable<ValueType>>
     extends RepositoryDataSource<ValueType, DS> {
-  RepositoryDataSourceCalleable({required super.dataSource});
+  RepositoryDataSourceCallable({required super.dataSource});
 
   RepositoryDatasourceCallableObserver get observer =>
       RepositoryObserverInstances.repositoryDatasourceCallableObserver;

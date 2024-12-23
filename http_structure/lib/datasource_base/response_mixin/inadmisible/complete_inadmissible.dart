@@ -1,9 +1,9 @@
-import 'package:module_structure/model/codeable.dart';
+import 'package:module_structure/model/codable.dart';
 import 'package:universal_io/io.dart';
 
 import '../../http_datasource.dart';
 
-/// Contains all 4XX inadmisible status code:
+/// Contains all 4XX inadmissible status code:
 /// *  badRequest = 400
 /// *  unauthorized = 401
 /// *  paymentRequired = 402
@@ -33,7 +33,7 @@ import '../../http_datasource.dart';
 /// *  connectionClosedWithoutResponse = 444
 /// *  unavailableForLegalReasons = 451
 /// *  clientClosedRequest = 499
-mixin CompleteInadmissible<Info extends Codeable> on HttpDataSource<Info> {
+mixin CompleteInadmissible<Info extends Codable> on HttpDataSource<Info> {
   @override
   List<int> get inadmissibleStatusCode => [
         HttpStatus.badRequest,
