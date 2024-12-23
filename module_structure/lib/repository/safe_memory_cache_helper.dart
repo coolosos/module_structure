@@ -8,7 +8,7 @@ import '../datasources/callable_datasource.dart';
 import 'safe_repository_datasource_callable.dart';
 
 abstract class SafeMemoryCacheRepository<Info,
-        DS extends DataSourceCalleable<Info>>
+        DS extends DataSourceCallable<Info>>
     extends SafeRepositoryDatasourceCallable<Info, DS>
     with MemoryCacheHelper<Info> {
   SafeMemoryCacheRepository({

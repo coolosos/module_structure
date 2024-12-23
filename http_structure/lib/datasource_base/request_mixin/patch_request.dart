@@ -1,13 +1,13 @@
-import 'package:module_structure/model/codeable.dart';
+import 'package:module_structure/model/codable.dart';
 import 'package:module_structure/model/params.dart';
 
+import '../http_datasource.dart';
 import 'params/patch_param.dart';
-import 'request.dart';
 
-mixin PatchRequest<Info extends Codeable> on Request<PatchParam, Info> {
+mixin PatchRequest<Info extends Codable> on HttpDataSource<Info> {
   @override
   Future<Info> call({required Params params}) async {
-    final PatchParam patchParams = generateCallRequeriment(params: params);
+    final PatchParam patchParams = generateCallRequirement(params: params);
 
     final callUri = patchParams.modifyUriWithUrlParams(uri);
 
@@ -32,4 +32,7 @@ mixin PatchRequest<Info extends Codeable> on Request<PatchParam, Info> {
       requestBody: body,
     );
   }
+
+  @override
+  PatchParam generateCallRequirement({required covariant Params params});
 }

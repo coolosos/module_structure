@@ -2,10 +2,10 @@ import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
 @immutable
-abstract class Codeable<T> with EquatableMixin {
-  const Codeable();
+abstract class Codable<T> with EquatableMixin {
+  const Codable();
 
-  Codeable decode(T remote);
+  Codable decode(T remote);
 
   @override
   bool? get stringify => true;

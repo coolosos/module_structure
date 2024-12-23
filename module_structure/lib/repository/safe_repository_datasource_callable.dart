@@ -8,8 +8,8 @@ import 'helpers/safe_repository_helper.dart';
 import 'repository_datasource_callable.dart';
 
 class SafeRepositoryDatasourceCallable<Info,
-        DS extends DataSourceCalleable<Info>>
-    extends RepositoryDataSourceCalleable<Info, DS>
+        DS extends DataSourceCallable<Info>>
+    extends RepositoryDataSourceCallable<Info, DS>
     with SafeRepositoryHelper<Info> {
   SafeRepositoryDatasourceCallable({required super.dataSource});
 

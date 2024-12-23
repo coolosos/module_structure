@@ -1,19 +1,19 @@
 library datasource.http;
 
 import 'package:flutter/foundation.dart';
-import 'package:module_structure/model/codeable.dart';
+import 'package:module_structure/model/codable.dart';
 import 'package:module_structure/datasources/callable_datasource.dart';
 import 'package:module_structure/model/params.dart';
 
 import 'package:universal_io/io.dart' hide HttpClient;
 
-import 'exception/datasource_exception.dart';
+import '../exception/datasource_exception.dart';
 import 'observer/http_datasource_observer.dart';
 import 'observer/http_observer.dart';
 import 'request_mixin/params/request_param.dart';
 export 'package:universal_io/io.dart' show HttpHeaders, ContentType;
 
-///Provide the required abstract method and values for remote datasource managent
+///Provide the required abstract method and values for remote datasource management
 ///
 ///To clarify and simply use is usually use with some mixin:
 /// * Request mixin: Provide the overrides to call method:
@@ -22,10 +22,10 @@ export 'package:universal_io/io.dart' show HttpHeaders, ContentType;
 ///   * Patch: PatchRequest
 ///   * Post: PostRequest
 ///   * Put: PutRequest
-/// * Admisible mixin: Provide overrides to admissible status code
+/// * Admissible mixin: Provide overrides to admissible status code
 ///   * RequestAdmissible: With all the success status
 ///   * OnlyOKAdmissible:  With the 200 status code
-///   * StandartAdmissible: With 200/201/202
+///   * StandardAdmissible: With 200/201/202
 /// * Inadmissible mixin: Provide overrides to inadmissible status code
 ///   * CompleteInadmissible:  With all the client error status
 ///   * OnlyBadRequestInadmissible: With the 400 status code
@@ -38,7 +38,7 @@ export 'package:universal_io/io.dart' show HttpHeaders, ContentType;
 ///   @override
 ///   String get url => 'https://www.example.es'
 ///
-///   @overrid
+///   @override
 ///   http.Client get client => http.Client()
 ///
 ///   @override
@@ -49,12 +49,12 @@ export 'package:universal_io/io.dart' show HttpHeaders, ContentType;
 ///     return data.decode(body);
 ///   }
 ///
-///   GetParam generateCallRequeriment({required NoParams params}){
+///   GetParam generateCallRequirement({required NoParams params}){
 ///     return GetParam();
 ///   }
 /// }
 /// ...
-/// class RemoteObject extends Codeable{
+/// class RemoteObject extends Codable{
 /// @override
 ///   RemoteObject decode(String body) {
 ///     return fromMap(bodyToMap(body));
@@ -72,8 +72,8 @@ export 'package:universal_io/io.dart' show HttpHeaders, ContentType;
 ///   }
 /// }
 /// ```
-abstract class HttpDataSource<Info extends Codeable>
-    extends DataSourceCalleable<Info> {
+abstract class HttpDataSource<Info extends Codable>
+    extends DataSourceCallable<Info> {
   HttpDataSource();
 
   HttpDatasourceObserver get observer =>
@@ -88,12 +88,12 @@ abstract class HttpDataSource<Info extends Codeable>
   ///path of the provide information
   Map<String, String> get pathModification => {};
 
-  ///List of [HttpStatus] with the admssible status codes.
+  ///List of [HttpStatus] with the admissible status codes.
   ///
   ///Usually statusCode = 200 is provide in this list
   List<int> get admissibleStatusCode => [];
 
-  ///List of [HttpStatus] with the inadmssible status codes.
+  ///List of [HttpStatus] with the inadmissible status codes.
   ///
   ///Usually statusCode = 400 is provide in this list.
   ///When inadmissible statusCode is return in call a [InadmissibleFailure] with the current information.
@@ -101,7 +101,7 @@ abstract class HttpDataSource<Info extends Codeable>
   ///Usually this must be uses for datasource error status code control.
   List<int> get inadmissibleStatusCode => [];
 
-  ///Provide http client for call requierements any implemantation of client will be accepted
+  ///Provide http client for call requirements any implementation of client will be accepted
   BaseClient get client;
 
   ///Current url transformation to URI.
@@ -149,7 +149,7 @@ abstract class HttpDataSource<Info extends Codeable>
   ///
   ///Start checking inadmissible and later if is not an admissible
   ///
-  ///By default, [transformation] function will be call afer success response.
+  ///By default, [transformation] function will be call after success response.
   @mustCallSuper
   Info checkInformation({
     required Response response,
@@ -216,9 +216,9 @@ abstract class HttpDataSource<Info extends Codeable>
   }
 
   ///Generate a request params
-  RequestParam generateCallRequeriment({required covariant Params params});
+  RequestParam generateCallRequirement({required covariant Params params});
 
-  ///Manage the server conection.
+  ///Manage the server connection.
   ///
   ///Usually use with [checkInformation] function for control server answer.
   @override

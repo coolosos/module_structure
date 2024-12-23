@@ -1,5 +1,5 @@
 name: http_structure
-description: Conventions of Datasource, Repository and Usecase
+description: Conventions of Datasource Management
 version: 0.0.1
 publish_to: "none"
 

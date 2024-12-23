@@ -1,7 +1,7 @@
-library datasource_exception;
+library;
 
 part 'inadmissible_exception.dart';
-part 'uncontrol_exception.dart';
+part 'uncontrolled_exception.dart';
 
 sealed class DataSourceException implements Exception {
   const DataSourceException({
