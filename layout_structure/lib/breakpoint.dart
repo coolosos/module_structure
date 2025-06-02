@@ -1,4 +1,5 @@
 import 'package:fpdart/fpdart.dart';
+
 export 'package:fpdart/fpdart.dart' show IO;
 
 enum BreakpointNames {
@@ -36,6 +37,18 @@ class Range {
   final double maxWidth;
 
   bool contains(double width) => width >= minWidth && width <= maxWidth;
+
+  bool overlaps(Range previous) => minWidth < previous.maxWidth;
+
+  @override
+  bool operator ==(covariant Range other) {
+    if (identical(this, other)) return true;
+
+    return other.minWidth == minWidth && other.maxWidth == maxWidth;
+  }
+
+  @override
+  int get hashCode => minWidth.hashCode ^ maxWidth.hashCode;
 }
 
 const _breakpoints = {
